@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Screener Dashboard - Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 28px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ff5252;
+        }
+
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        select {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background: white;
+            transition: border-color 0.3s ease;
+            min-width: 300px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .load-btn {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+
+        .load-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #667eea;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .control-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            select {
+                min-width: 100%;
+            }
+
+            .load-btn {
+                width: 100%;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <div class="header-title">📊 Stock Screener Dashboard</div>
+                <div class="header-subtitle">Real-time Bollinger Bands Analysis</div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <label for="csvSelect">Select CSV File:</label>
+                <select id="csvSelect">
+                    <option value="">-- Choose a CSV --</option>
+                    <option value="daily_weekly">Daily & Weekly (Daily/Weekly Breakouts)</option>
+                    <option value="weekly_monthly">Weekly & Monthly (Weekly/Monthly Breakouts)</option>
+                    <option value="daily_weekly_monthly">Daily, Weekly & Monthly (All Breakouts)</option>
+                </select>
+                <button class="load-btn" onclick="loadCSV()">Load Data</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats" id="stats" style="display: none;">
+                <div class="stat-card">
+                    <div class="stat-value" id="recordCount">0</div>
+                    <div class="stat-label">Total Records</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="uploadDate">N/A</div>
+                    <div class="stat-label">Last Updated</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMsg"></div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading data...</div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container" id="tableContainer">
+            <table id="dataTable">
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-state-icon">📈</div>
+            <div>Select a CSV file and click "Load Data" to begin</div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        if (localStorage.getItem('authToken') !== 'authenticated') {
+            window.location.href = 'login.html';
+        }
+
+        const CSV_URLS = {
+            'daily_weekly': 'https://raw.githubusercontent.com/hy-shih/stock_screener/main/bollinger_daily_weekly_d_modified_{{DATE}}.csv',
+            'weekly_monthly': 'https://raw.githubusercontent.com/hy-shih/stock_screener/main/bollinger_weekly_monthly_d_modified_{{DATE}}.csv',
+            'daily_weekly_monthly': 'https://raw.githubusercontent.com/hy-shih/stock_screener/main/bollinger_daily_weekly_monthly_d_modified_{{DATE}}.csv'
+        };
+
+        let currentData = [];
+        let currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '');
+
+        async function loadCSV() {
+            const select = document.getElementById('csvSelect');
+            const selectedValue = select.value;
+
+            if (!selectedValue) {
+                showError('Please select a CSV file');
+                return;
+            }
+
+            showLoading(true);
+            showError('');
+
+            try {
+                // Try to load with today's date
+                let url = CSV_URLS[selectedValue].replace('{{DATE}}', currentDate);
+                let response = await fetch(url);
+
+                // If today's file doesn't exist, try yesterday
+                if (response.status === 404) {
+                    let yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    let yesterdayDate = yesterday.toISOString().split('T')[0].replace(/-/g, '');
+                    url = CSV_URLS[selectedValue].replace('{{DATE}}', yesterdayDate);
+                    response = await fetch(url);
+                }
+
+                if (!response.ok) {
+                    throw new Error('Failed to load CSV file. Latest data may not be available yet.');
+                }
+
+                const csvText = await response.text();
+                parseAndDisplayCSV(csvText);
+            } catch (error) {
+                showError('Error loading CSV: ' + error.message);
+                showLoading(false);
+            }
+        }
+
+        function parseAndDisplayCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            if (lines.length < 2) {
+                showError('CSV file is empty');
+                showLoading(false);
+                return;
+            }
+
+            // Parse header
+            const headers = lines[0].split(',').map(h => h.trim());
+
+            // Parse data
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                // Simple CSV parsing (doesn't handle quoted values with commas)
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values.length === headers.length) {
+                    const row = {};
+                    headers.forEach((h, idx) => {
+                        row[h] = values[idx];
+                    });
+                    data.push(row);
+                }
+            }
+
+            currentData = data;
+            displayTable(headers, data);
+            showLoading(false);
+        }
+
+        function displayTable(headers, data) {
+            const tableHead = document.getElementById('tableHead');
+            const tableBody = document.getElementById('tableBody');
+            const emptyState = document.getElementById('emptyState');
+            const tableContainer = document.getElementById('tableContainer');
+            const stats = document.getElementById('stats');
+
+            // Clear existing content
+            tableHead.innerHTML = '';
+            tableBody.innerHTML = '';
+
+            // Create header
+            const headerRow = document.createElement('tr');
+            headers.forEach(h => {
+                const th = document.createElement('th');
+                th.textContent = h;
+                headerRow.appendChild(th);
+            });
+            tableHead.appendChild(headerRow);
+
+            // Create body rows
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                headers.forEach(h => {
+                    const td = document.createElement('td');
+                    let value = row[h];
+                    
+                    // Make URLs clickable
+                    if (h.includes('url') && value.startsWith('http')) {
+                        const a = document.createElement('a');
+                        a.href = value;
+                        a.target = '_blank';
+                        a.textContent = '🔗 TradingView';
+                        td.appendChild(a);
+                    } else {
+                        td.textContent = value;
+                    }
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+
+            // Update stats
+            document.getElementById('recordCount').textContent = data.length;
+            document.getElementById('uploadDate').textContent = currentDate.slice(0, 4) + '-' + currentDate.slice(4, 6) + '-' + currentDate.slice(6);
+
+            // Show/hide elements
+            emptyState.style.display = 'none';
+            tableContainer.style.display = 'block';
+            stats.style.display = 'grid';
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+            if (message) {
+                errorMsg.textContent = message;
+                errorMsg.style.display = 'block';
+            } else {
+                errorMsg.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
