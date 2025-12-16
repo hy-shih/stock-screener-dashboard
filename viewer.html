@@ -378,35 +378,41 @@
             try {
                 // Try to load with today's date, then yesterday, then day before (up to 7 days)
                 let csvText = null;
+                let loadedDate = null;
                 
                 for (let daysBack = 0; daysBack < 7; daysBack++) {
                     let testDate = new Date();
                     testDate.setDate(testDate.getDate() - daysBack);
                     let dateStr = testDate.toISOString().split('T')[0].replace(/-/g, '');
                     
-                    let url = CSV_URLS[selectedValue].replace('{{DATE}}', dateStr);
-                    console.log('Trying to fetch:', url);
+                    let filename = CSV_URLS[selectedValue].replace('{{DATE}}', dateStr);
+                    console.log(`[Attempt ${daysBack + 1}] Trying to fetch: ${filename}`);
                     
                     try {
-                        let response = await fetch(url);
+                        let response = await fetch(filename, {cache: 'no-store'});
+                        console.log(`Response status for ${filename}: ${response.status}`);
+                        
                         if (response.ok) {
                             csvText = await response.text();
-                            console.log('Successfully loaded CSV from', dateStr);
+                            loadedDate = dateStr;
+                            console.log(`✓ Successfully loaded CSV from ${filename} (${csvText.length} bytes)`);
                             // Update the date display
                             document.getElementById('uploadDate').textContent = dateStr.slice(0, 4) + '-' + dateStr.slice(4, 6) + '-' + dateStr.slice(6);
                             break;
                         }
                     } catch (e) {
-                        console.log('Failed to load from', dateStr);
+                        console.log(`✗ Failed to load ${filename}:`, e.message);
                     }
                 }
 
                 if (!csvText) {
-                    throw new Error('CSV file not found. Please ensure the stock screener has been run recently.');
+                    console.error('All CSV fetch attempts failed');
+                    throw new Error('CSV file not found in the past 7 days. Please ensure the stock screener workflow has run and pushed the files to GitHub.');
                 }
 
                 parseAndDisplayCSV(csvText);
             } catch (error) {
+                console.error('Error in loadCSV:', error);
                 showError('Error loading CSV: ' + error.message);
                 showLoading(false);
             }
