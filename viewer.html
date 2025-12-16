@@ -330,9 +330,9 @@
         }
 
         const CSV_URLS = {
-            'daily_weekly': 'https://raw.githubusercontent.com/hy-shih/stock_screener/main/bollinger_daily_weekly_d_modified_{{DATE}}.csv',
-            'weekly_monthly': 'https://raw.githubusercontent.com/hy-shih/stock_screener/main/bollinger_weekly_monthly_d_modified_{{DATE}}.csv',
-            'daily_weekly_monthly': 'https://raw.githubusercontent.com/hy-shih/stock_screener/main/bollinger_daily_weekly_monthly_d_modified_{{DATE}}.csv'
+            'daily_weekly': './bollinger_daily_weekly_d_modified_{{DATE}}.csv',
+            'weekly_monthly': './bollinger_weekly_monthly_d_modified_{{DATE}}.csv',
+            'daily_weekly_monthly': './bollinger_daily_weekly_monthly_d_modified_{{DATE}}.csv'
         };
 
         let currentData = [];
@@ -376,10 +376,10 @@
             showError('');
 
             try {
-                // Try to load with today's date, then yesterday, then day before
+                // Try to load with today's date, then yesterday, then day before (up to 7 days)
                 let csvText = null;
                 
-                for (let daysBack = 0; daysBack < 3; daysBack++) {
+                for (let daysBack = 0; daysBack < 7; daysBack++) {
                     let testDate = new Date();
                     testDate.setDate(testDate.getDate() - daysBack);
                     let dateStr = testDate.toISOString().split('T')[0].replace(/-/g, '');
@@ -392,6 +392,8 @@
                         if (response.ok) {
                             csvText = await response.text();
                             console.log('Successfully loaded CSV from', dateStr);
+                            // Update the date display
+                            document.getElementById('uploadDate').textContent = dateStr.slice(0, 4) + '-' + dateStr.slice(4, 6) + '-' + dateStr.slice(6);
                             break;
                         }
                     } catch (e) {
