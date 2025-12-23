@@ -1,0 +1,17 @@
+﻿symbol,symbol_url,週K_status,週K_close,週K_bband,週K_prev_high,週K_prev_low,週K_strict_check,月K_status,月K_close,月K_bband,月K_prev_high,月K_prev_low,月K_strict_check
+1587.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A1587,突破上軌,55.70,54.61,76.12,,True,突破上軌,55.70,54.25,76.12,,True
+1735.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A1735,突破上軌,19.40,18.31,28.16,,True,突破上軌,19.40,18.93,28.16,,True
+2548.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A2548,突破上軌,118.00,117.97,155.54,,True,突破上軌,118.00,115.74,155.54,,True
+3138.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A3138,突破上軌,111.00,109.82,155.43,,True,突破上軌,111.00,108.98,458.97,,True
+5522.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A5522,突破上軌,81.40,80.65,91.39,,True,突破上軌,81.40,77.43,91.39,,True
+6152.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A6152,突破上軌,11.90,11.46,20.10,,True,突破上軌,11.90,11.50,20.10,,True
+6443.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A6443,突破上軌,26.80,26.12,32.56,,True,突破上軌,26.80,23.97,48.58,,True
+1785.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A1785,突破上軌,69.30,68.55,75.20,,True,突破上軌,69.30,69.21,75.20,,True
+3152.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3152,突破上軌,150.00,145.47,236.12,,True,突破上軌,150.00,145.72,521.89,,True
+3354.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3354,突破上軌,25.00,24.85,35.07,,True,突破上軌,25.00,23.27,35.07,,True
+3499.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3499,突破上軌,17.70,17.41,26.85,,True,突破上軌,17.70,17.60,30.00,,True
+6127.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A6127,突破上軌,37.25,36.07,37.77,,True,突破上軌,37.25,35.45,37.77,,True
+6134.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A6134,突破上軌,29.05,28.65,44.30,,True,突破上軌,29.05,28.54,44.30,,True
+6218.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A6218,突破上軌,26.25,24.91,39.40,,True,突破上軌,26.25,24.89,39.40,,True
+6244.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A6244,突破上軌,23.20,22.16,34.26,,True,突破上軌,23.20,22.31,41.45,,True
+8102.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A8102,跌破下軌,57.10,59.62,,61.87,False,跌破下軌,57.10,59.47,,40.60,True
