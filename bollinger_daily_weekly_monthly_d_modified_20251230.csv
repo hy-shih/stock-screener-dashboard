@@ -1,0 +1,8 @@
+﻿symbol,symbol_url,日K_status,日K_close,日K_bband,日K_prev_high,日K_prev_low,日K_strict_check,週K_status,週K_close,週K_bband,週K_prev_high,週K_prev_low,週K_strict_check,月K_status,月K_close,月K_bband,月K_prev_high,月K_prev_low,月K_strict_check
+1721.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A1721,突破上軌,16.80,16.70,15.30,,False,突破上軌,16.80,15.86,26.55,,True,突破上軌,16.80,15.91,33.22,,True
+3054.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A3054,突破上軌,31.80,31.44,30.50,,False,突破上軌,31.80,30.92,28.45,,False,突破上軌,31.80,29.78,35.00,,True
+8438.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A8438,突破上軌,38.10,37.02,35.00,,False,突破上軌,38.10,36.22,52.26,,True,突破上軌,38.10,36.21,58.53,,True
+9941.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A9941,跌破下軌,87.00,87.19,,88.50,False,跌破下軌,87.00,87.45,,82.83,True,跌破下軌,87.00,87.76,,52.38,True
+3114.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3114,突破上軌,28.30,27.84,2142.72,,True,突破上軌,28.30,27.85,2142.72,,True,突破上軌,28.30,27.88,2142.72,,True
+4123.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A4123,突破上軌,41.45,40.75,40.03,,False,突破上軌,41.45,41.32,53.97,,True,突破上軌,41.45,40.96,54.63,,True
+5351.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A5351,突破上軌,49.05,48.14,48.10,,False,突破上軌,49.05,48.47,57.60,,True,突破上軌,49.05,47.73,95.90,,True
