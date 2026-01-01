@@ -1,0 +1,17 @@
+﻿symbol,symbol_url,週K_status,週K_close,週K_bband,週K_prev_high,週K_prev_low,週K_strict_check,月K_status,月K_close,月K_bband,月K_prev_high,月K_prev_low,月K_strict_check
+1528.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A1528,突破上軌,23.75,22.64,23.75,,True,突破上軌,23.75,21.98,23.75,,True
+1721.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A1721,突破上軌,16.50,15.67,26.55,,True,突破上軌,16.50,15.71,33.22,,True
+3006.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A3006,突破上軌,118.00,116.32,106.00,,False,突破上軌,118.00,112.70,182.69,,True
+3008.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A3008,突破上軌,2495.00,2484.51,3119.92,,True,突破上軌,2495.00,2489.78,3110.27,,True
+3054.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A3054,突破上軌,32.45,31.32,28.45,,False,突破上軌,32.45,30.25,35.00,,True
+3481.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A3481,突破上軌,17.05,16.36,16.84,,False,突破上軌,17.05,16.78,29.45,,True
+8438.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A8438,突破上軌,41.90,38.89,52.26,,True,突破上軌,41.90,38.93,58.53,,True
+9941.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A9941,跌破下軌,85.60,86.61,,82.83,True,跌破下軌,85.60,86.91,,52.38,True
+3444.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3444,突破上軌,74.50,72.53,127.06,,True,突破上軌,74.50,73.51,127.06,,True
+3455.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3455,突破上軌,112.50,108.81,139.70,,True,突破上軌,112.50,110.86,139.70,,True
+4123.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A4123,突破上軌,41.60,41.40,53.97,,True,突破上軌,41.60,41.05,54.63,,True
+5351.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A5351,突破上軌,50.80,49.51,57.60,,True,突破上軌,50.80,48.77,95.90,,True
+5386.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A5386,突破上軌,91.50,88.27,101.94,,True,突破上軌,91.50,88.95,101.41,,True
+6233.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A6233,突破上軌,25.50,24.93,48.67,,True,突破上軌,25.50,24.82,53.20,,True
+6234.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A6234,突破上軌,30.05,29.94,34.82,,True,突破上軌,30.05,30.03,38.81,,True
+8068.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A8068,突破上軌,28.90,26.92,45.00,,True,突破上軌,28.90,28.34,49.30,,True
