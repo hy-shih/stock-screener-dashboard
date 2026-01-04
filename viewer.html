@@ -338,6 +338,31 @@
         let currentData = [];
         let currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '');
 
+        // Function to open TradingView app with fallback
+        function openTradingView(url, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // Extract symbol from URL
+            const match = url.match(/symbols\/([^/]+)/);
+            if (!match) {
+                window.open(url, '_blank');
+                return;
+            }
+            
+            const symbolPart = match[1]; // e.g., "TWSE-2330"
+            const tradingviewAppUrl = `tradingview://chart?symbol=${symbolPart.replace('-', ':')}`;
+            
+            // Try to open app
+            window.location.href = tradingviewAppUrl;
+            
+            // Fallback to web after 2 seconds if app doesn't open
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 2000);
+        }
+
         async function fetchWithCORS(url) {
             try {
                 // Try direct fetch first
@@ -477,12 +502,14 @@
                     const td = document.createElement('td');
                     let value = row[h];
                     
-                    // Make URLs clickable
+                    // Make URLs clickable with app support
                     if (h.includes('url') && value.startsWith('http')) {
                         const a = document.createElement('a');
                         a.href = value;
-                        a.target = '_blank';
                         a.textContent = '🔗 TradingView';
+                        a.onclick = function(e) {
+                            openTradingView(value, e);
+                        };
                         td.appendChild(a);
                     } else {
                         td.textContent = value;
