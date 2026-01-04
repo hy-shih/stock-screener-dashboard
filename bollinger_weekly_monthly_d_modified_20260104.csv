@@ -1,0 +1,5 @@
+﻿symbol,symbol_url,週K_status,週K_close,週K_bband,週K_prev_high,週K_prev_low,週K_strict_check,月K_status,月K_close,月K_bband,月K_prev_high,月K_prev_low,月K_strict_check
+4912.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A4912,突破上軌,105.50,101.69,160.51,,True,突破上軌,105.50,103.62,161.82,,True
+8438.TW,https://tw.tradingview.com/chart/?symbol=TWSE%3A8438,突破上軌,46.05,41.87,52.26,,True,突破上軌,46.05,44.81,58.53,,True
+3360.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A3360,突破上軌,15.20,14.70,24.25,,True,突破上軌,15.20,14.89,24.25,,True
+5704.TWO,https://tw.tradingview.com/chart/?symbol=TPEX%3A5704,突破上軌,29.40,28.97,52.63,,True,突破上軌,29.40,29.38,80.61,,True
