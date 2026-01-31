@@ -338,33 +338,15 @@
         let currentData = [];
         let currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '');
 
-        // Function to open TradingView (手機會自動詢問是否用APP開啟)
-        function openTradingView(symbolString, event) {
+        // Function to open TradingView (使用官方APP分享連結格式)
+        function openTradingView(url, event) {
             if (event) {
                 event.preventDefault();
             }
             
-            // symbolString format: "TWSE:2330" or full URL
-            let symbol = symbolString;
-            
-            // If it's a full URL, extract the symbol
-            if (symbolString.includes('http')) {
-                const match = symbolString.match(/symbols\/([^/]+)/);
-                if (match) {
-                    symbol = match[1].replace('-', ':');
-                } else {
-                    window.open(symbolString, '_blank');
-                    return;
-                }
-            }
-            
-            // Ensure format is TWSE:2330
-            symbol = symbol.replace('-', ':');
-            
-            // 直接使用網頁版URL - 手機瀏覽器會自動詢問是否用APP開啟
-            // 這樣可以確保正確跳轉到標的
-            const webUrl = `https://www.tradingview.com/chart/?symbol=${symbol}`;
-            window.open(webUrl, '_blank');
+            // URL已經是正確的官方格式：https://tw.tradingview.com/symbols/TWSE-2330/
+            // 手機點擊會自動詢問是否用APP開啟，且能正確跳轉到標的
+            window.open(url, '_blank');
         }
 
         async function fetchWithCORS(url) {
