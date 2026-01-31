@@ -338,7 +338,7 @@
         let currentData = [];
         let currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '');
 
-        // Function to open TradingView app with fallback
+        // Function to open TradingView (手機會自動詢問是否用APP開啟)
         function openTradingView(symbolString, event) {
             if (event) {
                 event.preventDefault();
@@ -361,21 +361,10 @@
             // Ensure format is TWSE:2330
             symbol = symbol.replace('-', ':');
             
-            // Create both app and web URLs
-            const appUrl = `tradingview://chart?symbol=${symbol}`;
+            // 直接使用網頁版URL - 手機瀏覽器會自動詢問是否用APP開啟
+            // 這樣可以確保正確跳轉到標的
             const webUrl = `https://www.tradingview.com/chart/?symbol=${symbol}`;
-            
-            // Try to open app first
-            const start = Date.now();
-            window.location.href = appUrl;
-            
-            // Fallback to web if app doesn't open within 1.5 seconds
-            setTimeout(() => {
-                // If user is still on the page (app didn't open), open web version
-                if (Date.now() - start >= 1500) {
-                    window.open(webUrl, '_blank');
-                }
-            }, 1500);
+            window.open(webUrl, '_blank');
         }
 
         async function fetchWithCORS(url) {

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingView URL測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .test-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px 5px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        .info {
+            background: #e8f4f8;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 TradingView URL 轉跳測試</h1>
+        
+        <div class="info">
+            <strong>測試說明：</strong><br>
+            點擊下方按鈕測試不同URL格式能否開啟TradingView APP。<br>
+            在手機上測試效果最佳。如果有安裝TradingView APP，會自動開啟；否則會開啟網頁版。
+        </div>
+
+        <!-- 測試1: Deep Link - 格式1 -->
+        <div class="test-section">
+            <h3>方法1a: Deep Link - chart格式</h3>
+            <code>tradingview://chart?symbol=TWSE:2330</code>
+            <br><br>
+            <a href="tradingview://chart?symbol=TWSE:2330" class="btn">
+                測試台積電 (2330)
+            </a>
+            <a href="tradingview://chart?symbol=TPEX:6683" class="btn">
+                測試雍智 (6683)
+            </a>
+        </div>
+
+        <!-- 測試1b: Deep Link - 格式2 -->
+        <div class="test-section">
+            <h3>方法1b: Deep Link - symbol格式</h3>
+            <code>tradingview://symbol?symbol=TWSE:2330</code>
+            <br><br>
+            <a href="tradingview://symbol?symbol=TWSE:2330" class="btn">
+                測試台積電 (2330)
+            </a>
+            <a href="tradingview://symbol?symbol=TPEX:6683" class="btn">
+                測試雍智 (6683)
+            </a>
+        </div>
+
+        <!-- 測試1c: Deep Link - 格式3 -->
+        <div class="test-section">
+            <h3>方法1c: Deep Link - 直接symbol</h3>
+            <code>tradingview://TWSE:2330</code>
+            <br><br>
+            <a href="tradingview://TWSE:2330" class="btn">
+                測試台積電 (2330)
+            </a>
+            <a href="tradingview://TPEX:6683" class="btn">
+                測試雍智 (6683)
+            </a>
+        </div>
+
+        <!-- 測試2: 網頁URL -->
+        <div class="test-section">
+            <h3>方法2: 網頁版 URL</h3>
+            <p>使用標準網頁 URL，手機瀏覽器可能會詢問是否開啟APP</p>
+            <code>https://www.tradingview.com/chart/?symbol=TWSE:2330</code>
+            <br><br>
+            <a href="https://www.tradingview.com/chart/?symbol=TWSE:2330" target="_blank" class="btn btn-secondary">
+                測試台積電 (2330)
+            </a>
+            <a href="https://www.tradingview.com/chart/?symbol=TPEX:6683" target="_blank" class="btn btn-secondary">
+                測試雍智 (6683)
+            </a>
+        </div>
+
+        <!-- 測試3: 我們的實作方式 -->
+        <div class="test-section">
+            <h3>方法3: 智能轉跳 (我們的實作)</h3>
+            <p>先嘗試開啟APP，1.5秒後自動fallback到網頁版</p>
+            <br>
+            <button onclick="openTradingView('TWSE:2330', 'chart')" class="btn">
+                台積電 - chart格式
+            </button>
+            <button onclick="openTradingView('TWSE:2330', 'symbol')" class="btn">
+                台積電 - symbol格式
+            </button>
+            <button onclick="openTradingView('TWSE:2330', 'direct')" class="btn">
+                台積電 - 直接格式
+            </button>
+            <div id="result" class="result"></div>
+        </div>
+
+        <div class="info" style="margin-top: 30px; background: #fff3cd; border-left-color: #ffc107;">
+            <strong>⚠️ 測試結果：</strong><br>
+            Deep link格式都可以開APP但無法跳轉到標的。<br>
+            <br>
+            <strong>✅ 推薦解決方案：</strong><br>
+            直接使用網頁版URL，手機瀏覽器會自動詢問是否用APP開啟，<br>
+            且能正確跳轉到標的！
+        </div>
+
+        <!-- 推薦方案 -->
+        <div class="test-section" style="border: 2px solid #28a745;">
+            <h3 style="color: #28a745;">✅ 推薦方案: 網頁版URL (手機會自動詢問APP)</h3>
+            <p>這是最可靠的方式！手機瀏覽器會詢問是否用TradingView APP開啟，並能正確跳到標的</p>
+            <code>https://www.tradingview.com/chart/?symbol=TWSE:2330</code>
+            <br><br>
+            <a href="https://www.tradingview.com/chart/?symbol=TWSE:2330" target="_blank" class="btn" style="background: #28a745;">
+                測試台積電 (2330) ⭐
+            </a>
+            <a href="https://www.tradingview.com/chart/?symbol=TPEX:6683" target="_blank" class="btn" style="background: #28a745;">
+                測試雍智 (6683) ⭐
+            </a>
+        </div>
+
+        <div class="info" style="margin-top: 30px;">
+            <strong>💡 使用說明：</strong><br>
+            1. 在手機上點擊上方「推薦方案」的按鈕<br>
+            2. 瀏覽器會詢問「使用TradingView開啟？」<br>
+            3. 選擇「是」即可在APP中正確跳轉到標的<br>
+            4. 如果沒有APP或選擇「否」，則開啟網頁版
+        </div>
+    </div>
+
+    <script>
+        function openTradingView(symbol, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result show';
+            
+            // Create app URL based on type
+            let appUrl;
+            switch(type) {
+                case 'chart':
+                    appUrl = `tradingview://chart?symbol=${symbol}`;
+                    break;
+                case 'symbol':
+                    appUrl = `tradingview://symbol?symbol=${symbol}`;
+                    break;
+                case 'direct':
+                    appUrl = `tradingview://${symbol}`;
+                    break;
+                default:
+                    appUrl = `tradingview://chart?symbol=${symbol}`;
+            }
+            
+            const webUrl = `https://www.tradingview.com/chart/?symbol=${symbol}`;
+            
+            resultDiv.innerHTML = `
+                正在嘗試開啟 ${symbol} (${type}格式)...<br>
+                URL: <code>${appUrl}</code><br>
+                如果APP沒有正確跳轉，將在1.5秒後開啟網頁版
+            `;
+            
+            // Try to open app
+            const start = Date.now();
+            window.location.href = appUrl;
+            
+            // Fallback to web if app doesn't open within 1.5 seconds
+            setTimeout(() => {
+                if (Date.now() - start >= 1500) {
+                    resultDiv.innerHTML += '<br><strong>正在開啟網頁版...</strong>';
+                    window.open(webUrl, '_blank');
+                }
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
